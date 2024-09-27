@@ -1,98 +1,166 @@
-import { EyeIcon } from 'lucide-react';
+import { EyeIcon, EyeOffIcon } from 'lucide-react';
+import { useState } from 'react';
+import { withMask } from 'use-mask-input';
 // import { EyeOffIcon } from 'lucide-react';
 
 export default function Form() {
-  return (
-    <form>
-      <div className="mb-4">
-        <label htmlFor="name">Nome Completo</label>
-        <input type="text" id="name" />
-        {/* Sugestão de exibição de erro de validação */}
-        <div className="min-h-4">
-          <p className="text-xs text-red-400 mt-1">O nome é obrigatório.</p>
-        </div>
-      </div>
-      <div className="mb-4">
-        <label htmlFor="email">E-mail</label>
-        <input className="" type="email" id="email" />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="password">Senha</label>
-        <div className="relative">
-          <input type="password" id="password" />
-          <span className="absolute right-3 top-3">
-            <EyeIcon size={20} className="text-slate-600 cursor-pointer" />
-            {/* <EyeOffIcon
-                      className="text-slate-600 cursor-pointer"
-                      size={20}
-                    /> */}
-          </span>
-        </div>
-      </div>
-      <div className="mb-4">
-        <label htmlFor="confirm-password">Confirmar Senha</label>
-        <div className="relative">
-          <input type="password" id="confirm-password" />
-          <span className="absolute right-3 top-3">
-            <EyeIcon size={20} className="text-slate-600 cursor-pointer" />
-            {/* <EyeOffIcon
-                  className="text-slate-600 cursor-pointer"
-                  size={20}
-                /> */}
-          </span>
-        </div>
-      </div>
-      <div className="mb-4">
-        <label htmlFor="phone">Telefone Celular</label>
-        <input type="text" id="phone" />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="cpf">CPF</label>
-        <input type="text" id="cpf" />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="cep">CEP</label>
-        <input type="text" id="cep" />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="address">Endereço</label>
-        <input
-          className="disabled:bg-slate-200"
-          type="text"
-          id="address"
-          disabled
-        />
-      </div>
+	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-      <div className="mb-4">
-        <label htmlFor="city">Cidade</label>
-        <input
-          className="disabled:bg-slate-200"
-          type="text"
-          id="city"
-          disabled
-        />
-      </div>
-      {/* terms and conditions input */}
-      <div className="mb-4">
-        <input type="checkbox" id="terms" className="mr-2 accent-slate-500" />
-        <label
-          className="text-sm  font-light text-slate-500 mb-1 inline"
-          htmlFor="terms"
-        >
-          Aceito os{' '}
-          <span className="underline hover:text-slate-900 cursor-pointer">
-            termos e condições
-          </span>
-        </label>
-      </div>
+	const handleClick = () => {
+		setIsPasswordVisible(!isPasswordVisible);
+	};
 
-      <button
-        type="submit"
-        className="bg-slate-500 font-semibold text-white w-full rounded-xl p-4 mt-10 hover:bg-slate-600 transition-colors"
-      >
-        Cadastrar
-      </button>
-    </form>
-  );
+	return (
+		<form>
+			{/* Name */}
+			<div className='mb-4'>
+				<label htmlFor='name'>Nome Completo</label>
+				<input
+					type='text'
+					id='name'
+				/>
+				{/* Sugestão de exibição de erro de validação */}
+				<div className='min-h-4'>
+					<p className='text-xs text-red-400 mt-1'>O nome é obrigatório.</p>
+				</div>
+			</div>
+			{/* E-mail */}
+			<div className='mb-4'>
+				<label htmlFor='email'>E-mail</label>
+				<input
+					className=''
+					type='email'
+					id='email'
+				/>
+			</div>
+			{/* Password */}
+			<div className='mb-4'>
+				<label htmlFor='password'>Senha</label>
+				<div className='relative'>
+					<input
+						type={isPasswordVisible ? 'text' : 'password'}
+						id='password'
+					/>
+
+					<span className='absolute right-3 top-3'>
+						{/* Button show/hidden password */}
+						<button
+							type='button'
+							onClick={handleClick}>
+							{isPasswordVisible ? (
+								<EyeIcon
+									size={20}
+									className='text-slate-600 cursor-pointer'
+								/>
+							) : (
+								<EyeOffIcon
+									className='text-slate-600 cursor-pointer'
+									size={20}
+								/>
+							)}
+						</button>
+						{/*  */}
+					</span>
+				</div>
+			</div>
+			{/* Confirm */}
+			<div className='mb-4'>
+				<label htmlFor='confirm-password'>Confirmar Senha</label>
+				<div className='relative'>
+					<input
+						type={isPasswordVisible ? 'text' : 'password'}
+						id='password'
+					/>
+					<span className='absolute right-3 top-3'>
+						<button
+							type='button'
+							onClick={handleClick}>
+							{isPasswordVisible ? (
+								<EyeIcon
+									size={20}
+									className='text-slate-600 cursor-pointer'
+								/>
+							) : (
+								<EyeOffIcon
+									className='text-slate-600 cursor-pointer'
+									size={20}
+								/>
+							)}
+						</button>
+						{/*  */}
+					</span>
+				</div>
+			</div>
+			{/* Phone */}
+			<div className='mb-4'>
+				<label htmlFor='phone'>Telefone Celular</label>
+				<input
+					type='text'
+					id='phone'
+					ref={withMask('(99) 99999-9999')}
+				/>
+			</div>
+			{/* CPF */}
+			<div className='mb-4'>
+				<label htmlFor='cpf'>CPF</label>
+				<input
+					type='text'
+					id='cpf'
+					ref={withMask('999.999.999-99')}
+				/>
+			</div>
+			{/* CEP */}
+			<div className='mb-4'>
+				<label htmlFor='cep'>CEP</label>
+				<input
+					type='text'
+					id='cep'
+					ref={withMask('99999-999')}
+				/>
+			</div>
+			{/* Address */}
+			<div className='mb-4'>
+				<label htmlFor='address'>Endereço</label>
+				<input
+					className='disabled:bg-slate-200'
+					type='text'
+					id='address'
+					disabled
+				/>
+			</div>
+			{/* Cidade */}
+			<div className='mb-4'>
+				<label htmlFor='city'>Cidade</label>
+				<input
+					className='disabled:bg-slate-200'
+					type='text'
+					id='city'
+					disabled
+				/>
+			</div>
+			{/* terms and conditions input */}
+			{/* Check */}
+			<div className='mb-4'>
+				<input
+					type='checkbox'
+					id='terms'
+					className='mr-2 accent-slate-500'
+				/>
+				<label
+					className='text-sm  font-light text-slate-500 mb-1 inline'
+					htmlFor='terms'>
+					Aceito os{' '}
+					<span className='underline hover:text-slate-900 cursor-pointer'>
+						termos e condições
+					</span>
+				</label>
+			</div>
+			{/* Submit */}
+			<button
+				type='submit'
+				className='bg-slate-500 font-semibold text-white w-full rounded-xl p-4 mt-10 hover:bg-slate-600 transition-colors'>
+				Cadastrar
+			</button>
+		</form>
+	);
 }
